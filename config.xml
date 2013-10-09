@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+	xmlns:rim="http://www.blackberry.com/ns/widgets"
+	id="ReportaMe"
+	version="1.0.0.0">
+	<author href="https://welod.com">Welod</author>
+	<description>App para reportar cualquier servicio sobre la Infraestructura Urbana</description>
+	<name>ReportaMe</name>
+	<access uri="*" />
+	<content src="local:///index.html"/>
+	<feature id="ReportaMe">
+		<param name="orientation" value="portrait" />
+  	</feature>
+	<feature id="blackberry.app.event"/>
+	<feature id="blackberry.identity"/>
+	<feature id="blackberry.invoke" required="true" version="1.0.0.0"/>
+	<feature id="blackberry.invoke.card" />
+	<feature id="blackberry.io" required="true" version="1.0.0.0" />
+	<feature id="blackberry.system.event"/>
+	<feature id="blackberry.ui.contextmenu"/>
+	<feature id="blackberry.ui.dialog"/>
+	<feature id="blackberry.ui.menu"/>
+	<feature id="blackberry.ui.toast" />
+	<rim:orientation mode="portrait" />
+	<rim:permissions>
+		<rim:permit>access_location_services</rim:permit>
+		<rim:permit>use_camera</rim:permit>
+		<rim:permit>access_shared</rim:permit>
+	</rim:permissions>
+</widget>

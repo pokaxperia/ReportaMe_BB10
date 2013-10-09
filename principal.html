@@ -1,0 +1,71 @@
+<div data-bb-type="screen" data-bb-effect="fade" id="principal" data-bb-scroll-effect="off">
+	<link rel="stylesheet" type="text/css" href="css/style.css"></link>
+	<div id="atendidos" style="display:none">
+		<div data-bb-type="round-panel"> 
+			<div data-bb-type="panel-header">Reportes Atendidos</div>
+			<div style="font-size:40px;">Aqui va los atendidos</div>
+		</div>
+	</div>
+
+	<div id="pendientes" style="display:none">
+		<div data-bb-type="round-panel"> 
+			<div data-bb-type="panel-header">Reportes Pendientes</div>
+			<div style="font-size:40px;">Aqui va los pendientes</div>
+		</div>
+	</div>
+
+	<div id="no_enviados" style="display:none">
+		<div data-bb-type="round-panel"> 
+			<div data-bb-type="panel-header">Reportes No Enviados</div>
+			<div style="font-size:40px;">Aqui va los no enviados</div>
+		</div>
+	</div>
+
+	<div id="foto" style="display:none" > 
+		<div data-bb-type="round-panel"  style="margin:0;padding:0;" >
+			<div id="tomarFoto" data-bb-type="button" data-bb-style="stretch" onclick="invokeCamera();">Cámara</div>
+  			<img id="image-presenter"/>
+  			<canvas id="image-to-share"></canvas>
+  			<img id="to-share">
+		</div>
+	</div>
+
+	<div id="mapa" style="display:none" >
+		<div data-bb-type="round-panel" style="margin:0;padding:0;"> 
+			<img id="imagen">
+			<div id="ubicar" data-bb-type="button" data-bb-style="stretch" onclick="Map();">Ubicame</div>
+			<div id="waiting">
+				<div data-bb-type="activity-indicator" data-bb-size="medium"></div>
+			</div>
+			<div id="map-canvas"></div>
+		</div>
+	</div>
+
+	<div id="direccion" >
+		<div data-bb-type="round-panel"> 
+			<div data-bb-type="panel-header">Dirección</div>
+			<div style="font-size:40px;">Aqui va la dirección</div>	
+		</div>
+	</div>
+
+	<div data-bb-type="action-bar">
+		<div data-bb-type="action" data-bb-img="assets/icons/ic_done.png" data-bb-style="tab" data-bb-overflow="true" onclick="showTab('atendidos');">Reportes Atendidos</div>
+		<div data-bb-type="action" data-bb-style="tab" data-bb-overflow="true" onclick="showTab('pendientes');">Reportes Pendientes</div>
+		<div data-bb-type="action" data-bb-img="assets/icons/Light.png" data-bb-style="tab" data-bb-overflow="true" onclick="showTab('no_enviados');">Reportes No Enviados </div>
+		<div data-bb-type="action" data-bb-style="tab" data-bb-selected="true" data-bb-img="assets/icons/Document.png" onclick="showTab('direccion');">Dirección</div>
+		<div data-bb-type="action" data-bb-style="tab" data-bb-img="assets/icons/Camera.png" onclick="showTab('foto');">Foto</div>
+		<div data-bb-type="action" data-bb-style="tab" data-bb-img="assets/icons/ic_map.png" onclick="showTab('mapa');">Mapa</div>
+
+		<!-- If direccion is selected -->
+		<div id="mostrar_direccion" data-bb-type="action" data-bb-style="button" data-bb-overflow="true" onclick="alert('Opción del tab Dirección');">Mostrar Dirección</div>
+
+		<!-- If foto is selected -->
+		<div id="galeria" data-bb-type="action" data-bb-style="button" data-bb-visible="false" data-bb-overflow="true" data-bb-img="assets/icons/Album.png" onclick="invokeFilePicker();">Galeria de Imagenes</div>
+		<div id="tomar_foto" data-bb-type="action" data-bb-style="button" data-bb-visible="false" data-bb-overflow="true" data-bb-img="assets/icons/Camera.png" onclick="invokeCamera();">Tomar foto</div>
+
+		<!-- If map is selected -->
+		<div id="mostrar_mapa" data-bb-img="assets/icons/ic_map.png" data-bb-type="action" data-bb-style="button" data-bb-visible="false" data-bb-overflow="true" onclick="Map();">Ubícame otra vez</div>
+		
+		<div id="enviar" data-bb-type="action" data-bb-style="button" data-bb-pin="true" data-bb-overflow="true" data-bb-img="assets/icons/Twitter.png" onclick="InvokeToShare();">Enviar</div>
+	</div>
+</div>
