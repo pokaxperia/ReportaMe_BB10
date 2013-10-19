@@ -24,7 +24,7 @@ function showTab(id) {
 		document.getElementById('tomar_foto').hide();
 		document.getElementById('mostrar_mapa').show();
 		document.getElementById('mostrar_direccion').hide();
-			if (document.getElementById('map-canvas')) {
+		if (document.getElementById('map-canvas')) {
 		document.getElementById('mapa_normal').hide();
 		}
 	} else if (id == 'direccion') {
@@ -89,8 +89,6 @@ function invokeCamera() {
 	onCameraDone = function(path) {
 		canvas.src = "file://"+path;
 		canvas.onload=function(){
-			console.log(canvas.width);
-			console.log(canvas.height);
 			if (window.innerHeight === 720 & window.innerWidth === 720) {
 				if (canvas.width > canvas.height) {
 					canvas.style.width = "722px";
