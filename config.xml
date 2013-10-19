@@ -7,21 +7,19 @@
 	<description>App para reportar cualquier servicio sobre la Infraestructura Urbana</description>
 	<name>ReportaMe</name>
 	<access uri="*" />
+	<icon src="assets/icons/icon-720.png"/>
+	<icon src="assets/icons/icon-1280.png"/>
+	<rim:splash src="assets/splash-720x720.png" />
+	<rim:splash src="assets/splash-768x1280.png" />
 	<content src="local:///index.html"/>
 	<feature id="ReportaMe">
 		<param name="orientation" value="portrait" />
-  	</feature>
-	<feature id="blackberry.app.event"/>
-	<feature id="blackberry.identity"/>
+	</feature>
 	<feature id="blackberry.invoke" required="true" version="1.0.0.0"/>
+	<feature id="blackberry.app.event"/>
+	<feature id="blackberry.app"/>
 	<feature id="blackberry.invoke.card" />
-	<feature id="blackberry.io" required="true" version="1.0.0.0" />
-	<feature id="blackberry.system.event"/>
-	<feature id="blackberry.ui.contextmenu"/>
-	<feature id="blackberry.ui.dialog"/>
-	<feature id="blackberry.ui.menu"/>
 	<feature id="blackberry.ui.toast" />
-	<rim:orientation mode="portrait" />
 	<rim:permissions>
 		<rim:permit>access_location_services</rim:permit>
 		<rim:permit>use_camera</rim:permit>
