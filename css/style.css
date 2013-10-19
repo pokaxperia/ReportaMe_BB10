@@ -1,9 +1,33 @@
+#container{
+	height: 1141px;
+	position: fixed;
+	width: 768px;
+}
 #imagen{position:absolute;top:0;z-index:0;}
-#image-presenter{margin: 0;padding:0;width: 100%;}
-#image-to-share,#to-share{display:none;}
-#map-canvas{height:1140px;top:0;}
-#tomarFoto, #ubicar{margin:auto;width:50%;}
-#tomarFoto, #ubicar, #waiting{position:relative;top:500px;}
-#waiting{display:none;z-index:2;}
-div[data-bb-type="activity-indicator"]{margin:auto;width:18px;}
-@media screen and (min-aspect-ratio: 1/1){#tomarFoto, #ubicar, #waiting{margin:auto;top:250px;}}
+#image-presenter{margin: 0;padding:0;display:none;}
+#map-canvas{height:1141px;top:0;}
+#tomarFoto{position:inherit;top:520px;margin:0 192px;width:50%;}
+#ubicar{margin:0 192px;width:50%;position:fixed;top: 520px;}
+#waiting{margin: 0 auto;position:relative;top:520px;display: none;z-index: 2;}
+@media screen and (min-aspect-ratio: 1/1){
+
+	#container{
+		height: 611px;
+		position: fixed;
+		width: 722px;
+	}
+	#tomarFoto,#ubicar{
+		margin:0 181px;
+		top:265px;
+	}
+	#waiting{
+		margin:0 auto;
+		top:258px;
+	}
+	#map-canvas{
+		height:611px;
+		top:0;
+		position: fixed;
+	}
+	#image-presenter{margin: 0;padding:0;display:none;}
+}
