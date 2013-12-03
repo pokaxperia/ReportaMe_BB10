@@ -1,33 +1,76 @@
-#container{
+/* BlackBerry Z10 */
+#empty_map,#aboutApp{
 	height: 1141px;
+	margin: 0;
+	padding: 0;
 	position: fixed;
 	width: 768px;
 }
-#imagen{position:absolute;top:0;z-index:0;}
-#image-presenter{margin: 0;padding:0;display:none;}
-#map-canvas{height:1141px;top:0;}
-#tomarFoto{position:inherit;top:520px;margin:0 192px;width:50%;}
-#ubicar{margin:0 192px;width:50%;position:fixed;top: 520px;}
-#waiting{margin: 0 auto;position:relative;top:520px;display: none;z-index: 2;}
+#aboutApp{
+	background: url("../assets/about_768x1280.png") center;
+	opacity:0.9;
+}
+#empty_map{
+	background: url("../assets/empty_state/tabMapa1280.png") center;
+	opacity:0.9;
+}
+#mapa [data-bb-type ='round-panel']{
+	margin: 0;
+	padding: 0;
+}
+#map-canvas{
+	height:1141px;
+	top:0;
+}
+#panel{
+	height: 1141px;
+	padding: 0;
+}
+#tipoMapa{
+	left: 65%;
+	position: absolute;
+	top: 88%;
+}
+#ubicar{
+	margin:0 25%;
+	position:absolute;
+	top:75%;
+	width:50%;
+}
+#waiting{
+	display: none;
+	margin: 0 44%;
+	position:absolute;
+	top:851px;
+}
+/* BlackBerry Q10 */
 @media screen and (min-aspect-ratio: 1/1){
-
-	#container{
-		height: 611px;
+	#empty_map, #aboutApp{
+		height: 612px;
+		width: 721px;
+	}
+	#aboutApp{
+		background: url("../assets/about_720x720.png") center;
 		position: fixed;
-		width: 722px;
 	}
-	#tomarFoto,#ubicar{
-		margin:0 181px;
-		top:265px;
+	#empty_map{
+		background: url("../assets/empty_state/tabMapa720.png") center;
 	}
-	#waiting{
-		margin:0 auto;
-		top:258px;
+	#panel{
+		height: 612px;
+		padding: 0;
 	}
 	#map-canvas{
 		height:611px;
-		top:0;
-		position: fixed;
 	}
-	#image-presenter{margin: 0;padding:0;display:none;}
+	#tipoMapa{
+		left: 65%;
+		top: 78%;
+	}
+	#ubicar{
+		top: 480px;
+	}
+	#waiting{
+		top:468px;
+	}
 }

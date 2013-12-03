@@ -1,201 +1,10 @@
-// Show Tabs-------------------------------------------------------
-function showTab(id) {
-	if (id == 'foto') {
-		document.getElementById('foto').style.display = 'inline';
-		document.getElementById('mapa').style.display = 'none';
-		document.getElementById('direccion').style.display = 'none';
-		document.getElementById('atendidos').style.display = 'none';
-		document.getElementById('pendientes').style.display = 'none';
-		document.getElementById('no_enviados').style.display = 'none';
-		document.getElementById('galeria').show();
-		document.getElementById('tomar_foto').show();
-		document.getElementById('mostrar_mapa').hide();
-		document.getElementById('mostrar_direccion').hide();
-		document.getElementById('mapa_normal').hide();
-		document.getElementById('mapa_satelital').hide();
-	} else if (id == 'mapa') {
-		document.getElementById('mapa').style.display = 'inline';
-		document.getElementById('foto').style.display = 'none';
-		document.getElementById('direccion').style.display = 'none';
-		document.getElementById('atendidos').style.display = 'none';
-		document.getElementById('pendientes').style.display = 'none';
-		document.getElementById('no_enviados').style.display = 'none';
-		document.getElementById('galeria').hide();
-		document.getElementById('tomar_foto').hide();
-		document.getElementById('mostrar_mapa').show();
-		document.getElementById('mostrar_direccion').hide();
-		if (document.getElementById('map-canvas')) {
-		document.getElementById('mapa_normal').hide();
-		}
-	} else if (id == 'direccion') {
-		document.getElementById('direccion').style.display = 'inline';
-		document.getElementById('mapa').style.display = 'none';
-		document.getElementById('foto').style.display = 'none';
-		document.getElementById('atendidos').style.display = 'none';
-		document.getElementById('pendientes').style.display = 'none';
-		document.getElementById('no_enviados').style.display = 'none';
-		document.getElementById('galeria').hide();
-		document.getElementById('tomar_foto').hide();
-		document.getElementById('mostrar_mapa').hide();
-		document.getElementById('mostrar_direccion').show();
-		document.getElementById('mapa_normal').hide();
-		document.getElementById('mapa_satelital').hide();
-	} else if (id == 'atendidos') {
-		document.getElementById('atendidos').style.display = 'inline';
-		document.getElementById('mapa').style.display = 'none';
-		document.getElementById('foto').style.display = 'none';
-		document.getElementById('direccion').style.display = 'none';
-		document.getElementById('pendientes').style.display = 'none';
-		document.getElementById('no_enviados').style.display = 'none';
-		document.getElementById('galeria').hide();
-		document.getElementById('tomar_foto').hide();
-		document.getElementById('mostrar_mapa').hide();
-		document.getElementById('mostrar_direccion').hide();
-		document.getElementById('mapa_normal').hide();
-		document.getElementById('mapa_satelital').hide();
-	} else if (id == 'pendientes') {
-		document.getElementById('pendientes').style.display = 'inline';
-		document.getElementById('mapa').style.display = 'none';
-		document.getElementById('foto').style.display = 'none';
-		document.getElementById('direccion').style.display = 'none';
-		document.getElementById('atendidos').style.display = 'none';
-		document.getElementById('no_enviados').style.display = 'none';
-		document.getElementById('galeria').hide();
-		document.getElementById('tomar_foto').hide();
-		document.getElementById('mostrar_mapa').hide();
-		document.getElementById('mostrar_direccion').hide();
-		document.getElementById('mapa_normal').hide();
-		document.getElementById('mapa_satelital').hide();
-	} else if (id == 'no_enviados') {
-		document.getElementById('no_enviados').style.display = 'inline';
-		document.getElementById('mapa').style.display = 'none';
-		document.getElementById('foto').style.display = 'none';
-		document.getElementById('direccion').style.display = 'none';
-		document.getElementById('pendientes').style.display = 'none';
-		document.getElementById('atendidos').style.display = 'none';
-		document.getElementById('galeria').hide();
-		document.getElementById('tomar_foto').hide();
-		document.getElementById('mostrar_mapa').hide();
-		document.getElementById('mostrar_direccion').hide();
-		document.getElementById('mapa_normal').hide();
-		document.getElementById('mapa_satelital').hide();
-	}
-}
+var tipoMapa,mapaTipo,cambio,compartir,static_map,map,canvas,posicion;
 
-// Invoke Camera ----------------------------------------------------------------------
-function invokeCamera() {
-	var canvas = document.getElementById('image-presenter');
-	mode = blackberry.invoke.card.CAMERA_MODE_PHOTO,
-	onCameraDone = function(path) {
-		canvas.src = "file://"+path;
-		canvas.onload=function(){
-			if (window.innerHeight === 720 & window.innerWidth === 720) {
-				if (canvas.width > canvas.height) {
-					canvas.style.width = "722px";
-					canvas.style.height = "auto";
-				}
-				else {
-					canvas.style.height = "611px";
-					canvas.style.width = "auto";
-				}
-			}
-			else {
-				if (canvas.width > canvas.height) {
-					canvas.style.width = "768px";
-					canvas.style.height = "auto";
-				}
-				else {
-					canvas.style.height = "1141px";
-					canvas.style.width = "auto";
-				}
-			}
-		}
-		if (canvas.src){
-			canvas.style.display = "inline";
-			document.getElementById('tomarFoto').hide();
-			PinchToZoom();
-		}
-	},
-	onCameraCancel = function (reason) {
-		if (canvas.src=="") {
-			showToast("No hay imagen");
-		}
-	},
-	onCameraError = function (error) {
-		if (error) {
-			showToast("Hay un error con la cámara");
-		}
-		else {
-			console.log("invoke success " );
-		}
-	};
-	blackberry.invoke.card.invokeCamera(mode, onCameraDone, onCameraCancel, onCameraError);
-}
-// Invoke FilePicker (image gallery) ----------------------------------------------------------------------
-function invokeFilePicker() {
-	var canvas = document.getElementById('image-presenter');
-	options = {
-		filter: ["*.jpg","*.png","*.gif","*.jpeg"],
-		mode: blackberry.invoke.card.FILEPICKER_MODE_PICKER,
-		sortBy: blackberry.invoke.card.FILEPICKER_SORT_BY_DATE,
-		sortOrder: blackberry.invoke.card.FILEPICKER_SORT_ORDER_DESCENDING,
-		type: [blackberry.invoke.card.FILEPICKER_TYPE_PICTURE],
-		viewMode: blackberry.invoke.card.FILEPICKER_VIEWER_MODE_GRID
-	},
-	onPickerDone = function(path){
-		canvas.src = "file://"+path;
-		canvas.onload=function(){
-			if (window.innerHeight === 720 & window.innerWidth === 720) {
-				if (canvas.width > canvas.height) {
-					canvas.style.width = "722px";
-					canvas.style.height = "auto";
-				}
-				else {
-					canvas.style.height = "611px";
-					canvas.style.width = "auto";
-				}
-			}
-			else {
-				if (canvas.width > canvas.height) {
-					canvas.style.width = "768px";
-					canvas.style.height = "auto";
-				}
-				else {
-					canvas.style.height = "1141px";
-					canvas.style.width = "auto";
-				}
-			}
-		}
-		if (canvas.src){
-			canvas.style.display = "inline";
-			document.getElementById('tomarFoto').hide();
-			PinchToZoom();
-		}
-	},
-	onPickerCancel = function (reason) {
-		if (canvas.src=="") {
-			showToast("No hay imagen");
-		}
-	},
-	onPickerInvoke = function(error) {
-		if (error) {
-			showToast("No se puede acceder a los archivos");
-		} else {
-			console.log("Invoke success" );
-		}
-	};
-	blackberry.invoke.card.invokeFilePicker (options, onPickerDone, onPickerCancel, onPickerInvoke);
-}
-// Invoke to Share content ----------------------------------------------------------------------
-function InvokeToShare(){
-	var image = document.getElementById('image-presenter');
-	var request = {
-		action : 'bb.action.SHARE',
-		type: 'image/png',
-		uri : image.src,
-		target_type: ["CARD","APPLICATION"]
-	};
-	blackberry.invoke.card.invokeTargetPicker(request, "Compartir", onShareSuccess, onShareError)
+function Calificar(){
+    blackberry.invoke.invoke({
+        type:"application/xhtml+xml",
+        uri: "http://appworld.blackberry.com/webstore/content/39950935"
+    }, onShareSuccess, onShareError);
 }
 function onShareSuccess(response) {
 	console.log("Invocation works!");
@@ -203,43 +12,60 @@ function onShareSuccess(response) {
 function onShareError(error) {
 	console.log(error);
 }
+function Recommend(){
+	blackberry.bbm.platform.users.inviteToDownload();
+	return false;
+}
 // Geolocation ----------------------------------------------------------------------
 function Map(){
+	cambio = document.getElementById('tipoMapa');
+	if (cambio) {
+		document.getElementById('mapa').removeChild(cambio);	
+		document.getElementById('waiting').style.zIndex="1";
+	}
 	document.getElementById('waiting').style.display="block";
 	document.getElementById('ubicar').style.display="none";
 	if(navigator.geolocation){
-		var mapaNormal = document.getElementById('mapa_normal');
-		var mapaSatelital = document.getElementById('mapa_satelital');
+
 		document.getElementById('map-canvas').style.position="";
 		function onMapSuccess (datos){
-			mapaSatelital.style.display="inline";
+			var quitar = document.body.childNodes.item(12).nodeName.id;	
+//			document.getElementById('principal').removeChild(quitar);	
+			google.maps.visualRefresh = true;
 			document.getElementById('waiting').style.display="none";
-			var tipoMapa = google.maps.MapTypeId.ROADMAP;
+
+			var toggle = document.createElement('div');
+			toggle.setAttribute('id','tipoMapa');
+			toggle.setAttribute('data-bb-type','toggle');
+			toggle.setAttribute('data-bb-checked','true');
+			toggle.setAttribute('data-bb-on', 'Nmal');
+			toggle.setAttribute('data-bb-off', 'Satel');
+			toggle.onchange = function() {
+				if(document.getElementById('tipoMapa').getChecked()==true){
+					map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+				}
+				else{
+					map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+				}
+			};
+			toggle = bb.toggle.style(toggle);
+			document.getElementById('mapa').appendChild(toggle);
+
+			tipoMapa = google.maps.MapTypeId.ROADMAP;
 			var myLat = datos.coords.latitude;
 			var myLong = datos.coords.longitude;
 			var myLatlng = new google.maps.LatLng(myLat,myLong);
+
 			var mapOptions = {
 				center: myLatlng,
 				zoom: 18,
 				disableDefaultUI:true,
-				mapTypeId: tipoMapa
+				mapTypeId: tipoMapa,
 			}
+			setTimeout(function(){mapOptions},1000);
 
-			if (mapaSatelital.style.display= "inline" && google.maps.MapTypeId.ROADMAP) {
-				mapaSatelital.onclick=function(){
-						map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
-						mapaNormal.style.display = "inline";
-						mapaSatelital.style.display = "none";
-				}
-			}
-			if (mapaNormal.style.display = "inline" && google.maps.MapTypeId.SATELLITE) {
-				mapaNormal.onclick=function(){
-						map.setMapTypeId(tipoMapa);
-						mapaNormal.style.display = "none";
-						mapaSatelital.style.display = "inline";
-				}
-			}
-			var	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+			map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+			setTimeout(function(){map},1000);
 
 			google.maps.event.addListener(map, 'click', function(event) {
 				addMarker(event.latLng);
@@ -254,12 +80,12 @@ function Map(){
 			};
 
 			var marker = new google.maps.Marker({
-				position:myLatlng,
-				map:map,
-				icon: image,
+				animation: google.maps.Animation.DROP,
+				crossOnDrag:true,
 				draggable:true,
-				title: "Tu posición",
-				animation: google.maps.Animation.DROP
+				icon: image,
+				map:map,
+				position:myLatlng
 			});
 
 			// Add marker ----------------------------------------------------------------------
@@ -268,18 +94,31 @@ function Map(){
 					marker.setPosition(location);
 				} else{
 					marker = new google.maps.Marker({
-						position: location,
-						draggable:true,
 						animation: google.maps.Animation.DROP,
-						map: map
+						crossOnDrag:true,
+						draggable:true,
+						map: map,
+						position: location
 					});
 				}
-				nueva_posicion = "https://www.google.com.mx/maps/preview#!q="+location.lb+","+location.mb;
-				Prueba(nueva_posicion);
+				posicion = "https://www.google.com.mx/maps/preview#!q="+location.ob+","+location.pb;
+				if(document.getElementById('tipoMapa').getChecked()==true){
+					mapaTipo = "roadmap";
+					static_map = "http://maps.google.com/maps/api/staticmap?sensor=false&center="+location.ob+","+location.pb+"&zoom=18&size=768x1141&maptype=roadmap&markers=color:green%7Clabel:P%7C"+location.ob+","+location.pb
+				}
+				else{
+					mapaTipo = "hybrid";
+					static_map = "http://maps.google.com/maps/api/staticmap?sensor=false&center="+location.ob+","+location.pb+"&zoom=20&size=768x1141&maptype=hybrid&markers=color:green%7Clabel:P%7C"+myLat+","+location.pb
+				}
+				//static_map = "http://maps.google.com/maps/api/staticmap?sensor=false&center="+location.ob+","+location.pb+"&zoom=18&size=768x1141&maptype="+mapaTipo+"&markers=color:green%7Clabel:P%7C"+location.ob+","+location.pb;
+				google_map = "http://maps.google.com/maps?q="+location.ob+","+location.pb;
+				apple_map = "http://maps.apple.com/maps?q="+location.ob+","+location.pb;
+				blackberry_map = "http://maps.blackberry.com?lat="+location.ob+"&lon="+location.pb+"&z=1";
+				console.log(location);
+				//"http://maps.google.com/maps?q=loc:"+location.ob+","+location.pb;
 			};
 
 			//update Marker Position(latLng) by event listeners---------------------------------
-
 			google.maps.event.addListener(marker, 'dragstart', function() {
 				addMarker(marker.getPosition());
 			});
@@ -289,7 +128,20 @@ function Map(){
 			});
 
 			posicion ="https://www.google.com.mx/maps/preview#!q="+myLat+","+myLong;
-			Prueba(posicion);
+			console.log(posicion);
+			if(document.getElementById('tipoMapa').getChecked()==true){
+				mapaTipo = "roadmap";
+				static_map = "http://maps.google.com/maps/api/staticmap?sensor=false&center="+myLat+","+myLong+"&zoom=18&size=768x1141&maptype=roadmap&markers=color:green%7Clabel:P%7C"+myLat+","+myLong
+
+			}
+			else{
+				mapaTipo = "hybrid";
+				static_map = "http://maps.google.com/maps/api/staticmap?sensor=false&center="+myLat+","+myLong+"&zoom=20&size=768x1141&maptype=hybrid&markers=color:green%7Clabel:P%7C"+myLat+","+myLong
+			}
+			
+			google_map = "http://maps.google.com/maps?q="+myLat+","+myLong;
+			apple_map = "http://maps.apple.com/maps?q="+myLat+","+myLong;
+			blackberry_map = "http://maps.blackberry.com?lat="+myLat+"&lon="+myLong+"&z=1"
 		};
 		function onMapError (error){
 			switch(error.code) {
@@ -302,7 +154,7 @@ function Map(){
 				case error.TIMEOUT:
 					showToast("Se ha alcanzado el tiempo máximo para ubicarte");
 					break;
-				case error.TIMEOUT:
+				default:
 					showToast("Error desconocido ajeno a la app");
 					break;
 			}
@@ -315,61 +167,29 @@ function Map(){
 	}
 	else{
 		showToast("La geolocalización no esta disponible");
-		document.getElementById('mostrar_mapa').style.display = 'none';
+		document.getElementById('ubicarOtraVez').style.display = 'none';
 	}
-}
-function onMapError (error){
-	switch(error.code) {
-		case error.PERMISSION_DENIED :
-			showToast("El usuario negó el permiso para ubicarte");
-			break;
-		case error.POSITION_UNAVAILABLE:
-			showToast("No se pudo determinar tu ubicación");
-			break;
-		case error.TIMEOUT:
-			showToast("Error. Se ha alcanzado el tiempo máximo para ubicarte");
-			break;
-		case error.TIMEOUT:
-			showToast("Error desconocido ajeno a la app");
-			break;
-	}
-	document.getElementById('waiting').style.display="none";
-	document.getElementById('map-canvas').style.position="";
-	document.getElementById('ubicar').style.display="block";
 }
 // Show Toast ----------------------------------------------------------------------
 function showToast(message){
 	blackberry.ui.toast.show(message);
 }
-function Prueba(pos){
-	console.log(pos);
-}
-// Invoke to Share content ----------------------------------------------------------------------
-function InvokeToShare(){
-	try{
-		var image = document.getElementById('image-presenter');
-		var request = {
-			action : 'bb.action.SHARE',
-			type: ["text/plain","image/*"],
-			data:"hola",
-			uri : image.src,
-			target_type: ["APPLICATION", "VIEWER", "CARD"]
-		};
-		blackberry.invoke.card.invokeTargetPicker(request, "Compartir", onShareSuccess, onShareError)
+function InvokeToShareLocation(){
+	if (!map) {
+		showToast("No hay mapa que compartir");
+	}
+	var request = {
+		action : 'bb.action.SHARE',
+		mime:"text/plain",
+		data:"\n\nStatic Map\n\n"+static_map+"\n\n Google Map\n\n"+google_map+"\n\n Apple Map\n\n"+apple_map+"\n\n BlackBerry Map\n\n"+blackberry_map,
+		target_type: ["APPLICATION", "VIEWER", "CARD"]
+	};
+	blackberry.invoke.card.invokeTargetPicker(request, "Ubicación", onShareSuccess, onShareError)
 
-		function onShareSuccess(response) {
-			console.log(response);
-			
-			console.log(response);
-			console.log("Invocation works!");
-			console.log(request);
-		}
-		function onShareError(error) {
-			console.log(error);
-		}
+	function onShareSuccess(response) {
+		console.log("Invocation works!");
 	}
-	catch(e){
-		showToast("Ocurrio un error");
+	function onShareError(error) {
+		console.log(error);
 	}
-	
 }

@@ -2,31 +2,64 @@
 	<html lang="es">
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-		<title>index</title>
-		<link rel="stylesheet" type="text/css" href="css/bbui-min.css">
-		<script type="text/javascript" src="js/bbui-min.js"></script>
-		<script type="text/javascript" src="local:///chrome/webworks.js"></script>
-		<script id="principalJS" src="js/principal.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-		<script type="text/javascript">
-			var webworksreadyFired = false;
-			document.addEventListener('webworksready', function(e) {
-				// Si webworksready es disparado multiples veces, mantenemos init() solo una vez
-				if (webworksreadyFired) return;
-				webworksreadyFired = true;
-
-				// Manejar el estilo de la pantalla antes de que se muestra
-				onscreenready = function(element, id) {};
-				
-				// Manejar el estilo de la pantalla después de que se muestra
-				ondomready = function(element, id, params) {};
-				bb.init({coloredTitleBar:true,controlsDark:true,highlightColor:'#FF672D'});
-				bb.pushScreen('principal.html', 'principal');
-			}, false);
-		</script>
-
+		<link rel="stylesheet" type="text/css" href="css/bbui.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body>
+		<script src="local:///chrome/webworks.js" type="text/javascript"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX33nGXXeV8n1cDTADHZoWFJu54Yel6hE&sensor=false"></script>
+		<script src="js/bbui.js" type="text/javascript"></script>
+		<script src="js/principal.js"></script>
+		<script type="text/javascript">
+		    window.addEventListener('load', function() {
+				document.addEventListener('webworksready', function(e) {         
+					bb.init({
+						actionBarDark: true,
+						controlsDark: true,
+						listsDark: false,
+						highlightColor:'#089C81',
+						onscreenready: function(element, id) {},
+						ondomready: function(element, id) {}
+					});
+					try {
+						// Connect with BBM
+						Registro();
+							function Registro(){
+								function Acceso(accessible, status){
+									if (status === 'unregistered') {
+										Registrar();
+									}
+								}
+								function Registrar(){
+									blackberry.bbm.platform.register({
+										uuid: 'b7934869-83a8-4769-90a9-c8d2b9a72b2a'
+									});
+								}
+								blackberry.event.addEventListener("onaccesschanged", Acceso);
+							}
+						// lock portrait mode
+						blackberry.app.lockOrientation ("portrait-primary");
+						// setup active frame / Q10 window cover
+						if (window.innerWidth === 720 & window.innerHeight === 720) {
+							blackberry.ui.cover.setContent(blackberry.ui.cover.TYPE_IMAGE, {
+								path: 'local:///assets/cover_720.png'
+							});
+						}
+						// setup active frame / Z10 window cover
+						else if (window.innerWidth === 768 & window.innerHeight === 1280) {
+							blackberry.ui.cover.setContent(blackberry.ui.cover.TYPE_IMAGE, {
+								path: 'local:///assets/cover_768x1280.png'
+							});
+						}
+						setTimeout(function(){
+							blackberry.ui.cover.updateCover();
+						}, 0);
+					} catch(e) {
+						console.log('BBM / Window Covers will not work in the browser. On device only.');
+					}
+					bb.pushScreen('principal.html', 'principal');
+				}, false);
+			}, false);
+		</script>
 	</body>
 </html>
